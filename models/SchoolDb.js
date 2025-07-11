@@ -70,8 +70,8 @@ const Teacher = mongoose.model('Teacher', teacherSchema);
 const Classroom = mongoose.model('Classroom', classroomSchema);
 const Parent = mongoose.model('Parent', parentSchema);
 const Student = mongoose.model('Student', studentSchema);
-const Assigment =mongoose.model('Assignment', assignmentSchema);
+const Assignment =mongoose.model('Assignment', assignmentSchema);
 
 
-module.exports = {User,Teacher, Classroom, Parent, Student, Assigment };
+module.exports = {User,Teacher, Classroom, Parent, Student, Assignment };
 

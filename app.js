@@ -16,6 +16,10 @@ app.use(cors());
 // below we allow our API to accept data inform of json format
 app.use(express.json());
 
+// import the login routes for the users
+const loginRoutes = require("./routes/login");
+app.use("/api/auth", loginRoutes);
+
 
 // Test/establish the connection to the database using the link specified inside of the .env file
 mongoose.connect(process.env.MONGO_URI)
