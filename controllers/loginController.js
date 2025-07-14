@@ -62,6 +62,8 @@ exports.login = async(req, res) =>{
 
         // 1. Check whether the email address passed is valid or not
         const user = await User.findOne({ email });
+        // console.log("The details of the user are: ", user)
+
         if(!user){
             return res.status(401).json({message : "Email address could not be found."});
         }

@@ -20,6 +20,10 @@ app.use(express.json());
 const loginRoutes = require("./routes/login");
 app.use("/api/auth", loginRoutes);
 
+// import the classroom routes
+const classroomRoutes = require("./routes/classroom");
+app.use("/api/classrooms", classroomRoutes);
+
 
 // Test/establish the connection to the database using the link specified inside of the .env file
 mongoose.connect(process.env.MONGO_URI)
