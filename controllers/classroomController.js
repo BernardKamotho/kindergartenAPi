@@ -32,6 +32,7 @@ exports.getAllClassrooms = async (req, res) =>{
     try{
         // by use of the function find we can fetch all the classrooms
         const classrooms = await Classroom.find()
+        .populate('teacher', 'name email phone')
 
         // return all the classrooms
         res.json(classrooms)
@@ -48,6 +49,7 @@ exports.getClassroomById = async (req, res)=>{
         // we shall use the findById() function to do this.
         // The id we shall pass it as a parameter on the url
         const classroom = await Classroom.findById( req.params.id )
+        .populate('teacher', 'name email phone')
 
         console.log("The content of the classroom is: ", classroom)
 
@@ -64,6 +66,35 @@ exports.getClassroomById = async (req, res)=>{
         res.status(500).json({message : "Error fetching the classroom", error : err.message})
     }
 };
+
+// ====================================
+// Updating a classroom
+// Below is the endpoint
+exports.updateClassroom = async (req, res)=>{
+    try{
+        // We shall use the function findByIdAndUpdate
+        const updateClassroom = await Classroom.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            {new : true} //Return the updated document
+        );
+
+        // console.log(updateClassroom)
+
+        //Check whether the classroom with the given id exists?
+        if(!updateClassroom){
+            return res.status(404).json({message : "Classroom not Found, Check the ID"})
+        }
+
+        //if the classroom is there, return the updated record
+        res.json(updateClassroom)
+    }
+    catch(err){
+        res.status(400).json({message : "Error Updating a classroom", error : err.message})
+    }
+};
+
+
 
 // =======================
 // Delete a classroombased on ID

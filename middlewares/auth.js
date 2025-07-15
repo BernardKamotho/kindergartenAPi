@@ -29,6 +29,7 @@ const auth = (req, res, next)=>{
         // attach the decoded payload (user data) to the request object
         req.user = decoded;
 
+
         // if it is valid you proceed to the next step
         next();
 

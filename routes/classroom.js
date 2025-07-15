@@ -17,6 +17,9 @@ router.get('/',auth, classroomController.getAllClassrooms);
 // Below is the route for fetching a single classroom
 router.get('/:id',auth, classroomController.getClassroomById);
 
+// Below is the update route
+router.put("/:id", classroomController.updateClassroom);
+
 // Below is the endopoint to delete a classroom
 router.delete("/:id",auth, authorizeRoles('admin'), classroomController.deleteClassroom);
 
