@@ -29,6 +29,7 @@ const teachersRoutes = require("./routes/teachers");
 app.use("/api/teachers", teachersRoutes);
 
 
+
 // Test/establish the connection to the database using the link specified inside of the .env file
 mongoose.connect(process.env.MONGO_URI)
 .then(()=> console.log("Mongodb successfully connected"))

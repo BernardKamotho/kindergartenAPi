@@ -124,10 +124,107 @@ exports.updateTeacher = async(req, res)=>{
             return res.status(404).json({message : "Teacher not found"})
         };
 
+        // work on the logic for updating the teachers password when he has logged in.
+
         // if the id exists and a successful update has happened, return the new records
         res.json(updatedTeacher)
     }
     catch(err){
         res.status(400).json({message : "Error Updating the teacher", error: err.message})
+    }
+};
+
+// =======================================
+// Deleting a teacher endpoint
+// Delink/Unassign
+
+exports.deleteTeacher = async (req, res) =>{
+    try{
+        // get the teachersId from the passed request with params
+        const teacherId = req.params.id
+        // console.log("The inserted teachers id is: ", teacherId)
+
+        // Delete  a teacher with the passed Id
+        const deletedTeacher = await Teacher.findByIdAndDelete( teacherId );
+
+
+        // check whether the passed ID exists or not
+        if(!deletedTeacher) {
+            return res.status(40).json({message : "Teacher not found"})
+        };
+
+        // Delink/Unassign the teache from the previously assigned class
+        await Classroom.updateMany({ teacher : teacherId }, { $set : {teacher : null}})
+
+        // Delete the teacher record/field inside of the users collection
+        await User.findOneAndDelete({ teacher: teacherId})
+
+        // Give a response back to the user if the operation is succcessful
+        res.json({message : "Teacher successfully Deleted"})
+
+    }
+    catch(err){
+        // Handle any error that may have arised from the operation
+        res.status(500).json({message : "Error Deleting The Teacher", error : err.message})
+    }
+};
+
+
+// ===============================
+// We shall get the only  classes a particular teacher is teaching/teaches
+exports.getMyClasses = async(req, res)=>{
+    try{       
+        // Get teacher ID from the Logged in user
+         const userId = req.user.userId
+
+        //  find the user and populate the 'teacher reference
+        const user = await User.findById(userId).populate('teacher')
+
+        // check if the user exists and is linked to a teacher
+        if(!user || !user.teacher){
+            return res.status(404).json({message : "Teacher not found."})
+        };
+
+        // If the teacher with that id is found, get all the classrooms taught by the this teacher and also
+        // include the students therein
+        const classes = await Classroom.findById({
+            teacher : user.teacher._id
+        }).populate('students') ; // We show the students it that particular class
+
+        // give a response back
+        res.json(classes)
+        
+
+    }
+    catch(err){
+        // handle any error during the operation
+        res.status(500).json({message  : "Error occured", error : err.message})
+    }
+};
+
+
+// ===================================
+// Below is the route to access the assignments that have been shared by a teacher
+exports.getMyAssignments = async(req, res) =>{
+    try{
+
+        // Get the users id
+        const userId = req.user.userId;
+
+        // find a teacher based on that given id
+        const user  = await User.findById(userId).populate('teacher')
+
+        // based on this we are able to tell who posted a given assignment
+        const assignments = await Assignment.find({ postedBy : user.teacher._id})
+        .populate('classroom') // this includes the classroom details
+        .sort({ dueDate : 1 })
+
+        console.log("The contents of the assignment are: ", assignments)
+
+        res.status(200).json(assignments)
+    }
+    catch(err){
+        // handle any error if any
+        res.status(500).json({message : err.message})
     }
 };
