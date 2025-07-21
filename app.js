@@ -33,6 +33,10 @@ app.use("/api/teachers", teachersRoutes);
 const assignmentRoutes = require("./routes/assignment");
 app.use("/api/assignments", assignmentRoutes);
 
+// Specify the parents routes
+const parentsRoutes = require("./routes/parent");
+app.use("/api/parents", parentsRoutes);
+
 
 
 // Test/establish the connection to the database using the link specified inside of the .env file

@@ -54,20 +54,20 @@ exports.addAssignment = async(req, res) =>{
         }
 
         // prepare the assignment data with the postedBy set to the current teacher
-        // console.log("The id of the logged in teacher is: ", user.teacher.id)
-        const assignmentData = {
-            ...req.body,
-            postedBy : user.teacher.id
-        }
+        console.log("The id of the logged in teacher is: ", user.teacher.id, user.teacher._id)
+        // const assignmentData = {
+        //     ...req.body,
+        //     postedBy : user.teacher.id
+        // }
 
-        // console.log("The content of assignmentData are: ", assignmentData)
+        // // console.log("The content of assignmentData are: ", assignmentData)
 
-        // save the assignment to the database
-        const newAssingment = new Assignment(assignmentData);
-        const savedAssignment = await newAssingment.save();
+        // // save the assignment to the database
+        // const newAssingment = new Assignment(assignmentData);
+        // const savedAssignment = await newAssingment.save();
 
-        // if the process is a success return a response
-        res.status(201).json(savedAssignment)
+        // // if the process is a success return a response
+        // res.status(201).json(savedAssignment)
     }
     catch(err){
         // handle any error if any occurs
