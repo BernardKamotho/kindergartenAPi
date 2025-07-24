@@ -45,6 +45,10 @@ app.use("/api/students", studentRoutes);
 const adminDashboardRoutes = require("./routes/dashboardAdmin");
 app.use("/api/dashboarAdmin", adminDashboardRoutes)
 
+// specify the routes to to teacher dashboard
+const teacherDashboard = require("./routes/teacherStats");
+app.use("/api/teacherDashboard", teacherDashboard);
+
 
 
 // Test/establish the connection to the database using the link specified inside of the .env file
