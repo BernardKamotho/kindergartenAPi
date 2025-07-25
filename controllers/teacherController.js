@@ -219,7 +219,7 @@ exports.getMyAssignments = async(req, res) =>{
         .populate('classroom') // this includes the classroom details
         .sort({ dueDate : 1 })
 
-        console.log("The contents of the assignment are: ", assignments)
+        // console.log("The contents of the assignment are: ", assignments)
 
         res.status(200).json(assignments)
     }

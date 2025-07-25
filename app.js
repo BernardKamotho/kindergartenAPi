@@ -50,6 +50,11 @@ const teacherDashboard = require("./routes/teacherStats");
 app.use("/api/teacherDashboard", teacherDashboard);
 
 
+// specify the routes for accessing the parents dashboard stats
+const parentDashboardRoutes = require("./routes/parentDashboardStas");
+app.use("/api/parentDashboard", parentDashboardRoutes)
+
+
 
 // Test/establish the connection to the database using the link specified inside of the .env file
 mongoose.connect(process.env.MONGO_URI)
