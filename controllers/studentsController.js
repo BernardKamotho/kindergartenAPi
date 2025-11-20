@@ -63,14 +63,17 @@ exports.addStudent = async(req, res) =>{
         // Step 4
         // Handle the uploaded photo(rename it with the current timestamp. Return the extension of the photo)
         let photo = null;
-        if(req.file){
-            const ext = path.extname(req.file.originalname);
-            const newFilename = Date.now() + ext;
-            const newPath = path.join('uploads', newFilename)
-            fs.renameSync(req.file.path, newPath);
+        // if(req.file){
+        //     const ext = path.extname(req.file.originalname);
+        //     const newFilename = Date.now() + ext;
+        //     const newPath = path.join('uploads', newFilename)
+        //     fs.renameSync(req.file.path, newPath);
 
-            photo = newPath.replace(/\\/g, '/')
-        };
+        //     photo = newPath.replace(/\\/g, '/')
+        // };
+            if (req.file && req.file.path) {
+                req.body.photo = req.file.path;
+            }
 
         // step 5: create and save the new student
         const newStudent = new Student({

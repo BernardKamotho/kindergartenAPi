@@ -10,7 +10,16 @@ const {auth, authorizeRoles} = require("../middlewares/auth");
 router.get("/",auth,  studentController.getAllStudents);
 
 // below is the route to add a new student
-router.post("/",auth,authorizeRoles("admin"), studentController.uploadStudentPhoto, studentController.addStudent);
+// router.post("/",auth,authorizeRoles("admin"), studentController.uploadStudentPhoto, studentController.addStudent);
+
+router.post('/', auth, (req, res, next) => {
+  console.log('📥 POST / route hit');
+  next();
+}, upload.single('photo'), (req, res, next) => {
+  console.log('📷 File middleware passed');
+  next();
+}, studentController.addStudent);
+
 
 // get a student based on the ID
 router.get("/:id",auth, studentController.getStudentById);

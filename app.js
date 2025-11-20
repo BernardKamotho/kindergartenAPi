@@ -13,6 +13,9 @@ require('dotenv').config();
 const app = express();
 app.use(cors());
 
+// This makes images accessible via URLs like: http://yourserver.com/uploads/1234567.jpg
+app.use('/uploads', express.static('uploads'));
+
 // below we allow our API to accept data inform of json format
 app.use(express.json());
 
