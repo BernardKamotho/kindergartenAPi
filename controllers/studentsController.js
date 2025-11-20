@@ -26,6 +26,8 @@ exports.getAllStudents = async(req, res)=>{
 };
 
 
+
+
 // Below is the function to add a students
 // By use of the multer module, configure the storage folder of the images
 const upload = multer({ dest : 'uploads/'})
