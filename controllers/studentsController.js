@@ -81,7 +81,7 @@ exports.addStudent = async(req, res) =>{
             dateOfBirth,
             gender,
             admissionNumber,
-            photo, 
+            photo: req.body.photo, 
             parent : parent._id,
             classroom : classroom._id
         });
