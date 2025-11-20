@@ -4,6 +4,7 @@ const router = express.Router();
 const studentController = require('../controllers/studentsController');
 
 const {auth, authorizeRoles} = require("../middlewares/auth");
+const upload = require("../middlewares/upload")
 
 
 // Below is the route to Get all students
